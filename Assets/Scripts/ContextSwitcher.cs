@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -10,6 +11,8 @@ public class ContentSwitcher : MonoBehaviour
     // 💡 변경점 1: GameObject 대신 UIPanel 리스트를 사용합니다.
     [Tooltip("이 스위처가 관리할 UIPanel 목록입니다. TabGroup의 버튼 순서와 일치시켜야 합니다.")]
     [SerializeField] private List<UIPanel> contentPanels;
+
+    private int idxSaver = 0;
     
     // 💡 변경점 2: GameObject 대신 UIPanel을 추적합니다.
     private UIPanel currentActiveContent;
@@ -22,6 +25,12 @@ public class ContentSwitcher : MonoBehaviour
             panel.Hide();
         }
     }
+
+    private void OnEnable()
+    {
+        UIEvents.PanelShown(contentPanels[idxSaver]);
+    }
+
 
     /// <summary>
     /// 지정된 인덱스의 콘텐츠를 활성화하고 그 사실을 전역에 방송합니다.
@@ -41,6 +50,7 @@ public class ContentSwitcher : MonoBehaviour
         // 💡 변경점 3: SetActive(true) 대신 Show()를 호출합니다.
         targetPanel.Show();
         currentActiveContent = targetPanel;
+        idxSaver = index;
         
         // 💡 여기가 핵심: "내가 이 패널을 열었다!" 라고 UIManager와 똑같은 방식으로 전역 방송을 합니다.
         UIEvents.PanelShown(targetPanel);

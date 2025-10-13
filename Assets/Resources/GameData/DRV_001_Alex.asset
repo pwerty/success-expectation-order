@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64206832f42c1408383e4c4393296d6e, type: 3}
+  m_Name: DRV_001_Alex
+  m_EditorClassIdentifier: Assembly-CSharp::DriverData
+  id: DRV_001
+  name: Alex
+  description: 
+  icon: {fileID: 21300000, guid: 2c6f3df50e8604f859ef7c0a48e5ba68, type: 3}
+  modelPrefab: {fileID: 0}
+  basePedalSense: 120
+  baseRecoverySpeed: 100
+  baseProblemSolving: 80
+  growthPedalSense: 25
+  growthRecoverySpeed: 20
+  growthProblemSolving: 15

@@ -1,0 +1,4 @@
+ID (Key),Name,BasePedalSense,GrowthPedalSense,BaseRecoverySpeed,GrowthRecoverySpeed,BaseProblemSolving,GrowthProblemSolving
+DRV_001,알렉스,120,25,100,20,80,15
+DRV_002,소피아,90,18,110,22,100,20
+DRV_003,켄지,100,20,90,18,110,22

@@ -1,0 +1,4 @@
+ID (Key),Name,Rarity,BaseSpeed,GrowthSpeed,BaseDrift,GrowthDrift,BaseAcceleration,GrowthAcceleration
+CAR_001,엘란트라,R,100,50,100,20,100,30
+CAR_002,소나타,SR,150,60,130,25,120,35
+CAR_003,그랜저,SSR,200,70,160,30,140,40

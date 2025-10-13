@@ -34,42 +34,38 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            return;
         }
+        
+        UIPanel[] allPanels = FindObjectsByType<UIPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+    
+        foreach (UIPanel panel in allPanels)
+        {
+            // ... (나머지 코드는 완벽하게 동일) ...
+            if (panel.isControlledByManager)
+            {
+                if (!panelRegistry.ContainsKey(panel.panelId))
+                {
+                    panelRegistry.Add(panel.panelId, panel);
+                }
+                else
+                {
+                    Debug.LogWarning($"중복된 Panel ID가 존재합니다: {panel.panelId}");
+                }
+            }
+        }
+        
     }
 
     void Start()
     {
-        // --- 여기가 핵심: '주소록' 자동 생성 ---
-        // 씬에 존재하는 모든 UIPanel 컴포넌트를 찾아(비활성화된 것도 포함) 주소록에 자동 등록합니다.
-        UIPanel[] allPanelsInScene = FindObjectsByType<UIPanel>(FindObjectsSortMode.None);
-
-        // 2. LINQ의 Where() 함수를 사용해 isManagedByUIManager가 true인 패널만 걸러냅니다.
-        var managedPanels = allPanelsInScene.Where(panel => panel.isControlledByManager);
         
-        // 3. 오직 걸러낸 패널들('최상위 패널')만 가지고 주소록(Dictionary)을 만듭니다.
-        foreach (UIPanel panel in managedPanels)
-        {
-            if (!panelRegistry.ContainsKey(panel.panelId))
-            {
-                panelRegistry.Add(panel.panelId, panel);
-            }
-            else
-            {
-                Debug.LogWarning($"중복된 Panel ID가 존재합니다: {panel.panelId}. GameObject: {panel.gameObject.name}");
-            }
-        }
-        
-        print("등록 완료");
         
         // 모든 패널을 숨기고 홈 패널만 표시하며 시작합니다.
         foreach (var panel in panelRegistry.Values)
         {
             panel.Hide();
-            print(panel.name + "숨었다");
         }
         ShowPanelInternal(homePanelId);
-        print("홈으로 화면 초기화 완료!");
     }
     
     /// <summary>
@@ -132,7 +128,6 @@ public class UIManager : MonoBehaviour
         {
             targetPanel.Show();
             currentActivePanel = targetPanel;
-            Debug.Log("Switch Complete");
             
             UIEvents.PanelShown(targetPanel);
         }

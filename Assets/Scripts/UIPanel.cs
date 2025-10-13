@@ -1,4 +1,6 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -33,6 +35,8 @@ public class UIPanel : MonoBehaviour
     public virtual void Show()
     {
         gameObject.SetActive(true);
+        StartCoroutine(AnimateChildrenOnShow());
+        if (!isLogicalPanel) AudioManager.Instance.SetMusicLayer(musicLayer);
     }
 
     /// <summary>
@@ -41,5 +45,33 @@ public class UIPanel : MonoBehaviour
     public virtual void Hide()
     {
         gameObject.SetActive(false);
+    }
+    
+    /// <summary>
+    /// 자식으로 있는 모든 UIComponentAnimator를 찾아 순서대로 애니메이션을 재생하는 코루틴입니다.
+    /// </summary>
+    private IEnumerator AnimateChildrenOnShow()
+    {
+        // 1. 자신의 모든 자식들 중에서 UIComponentAnimator를 찾습니다. (비활성화된 자식도 포함)
+        List<UIComponentAnimator> components = GetComponentsInChildren<UIComponentAnimator>(true).ToList();
+
+        // 2. 설정된 delay 값에 따라 오름차순으로 정렬합니다.
+        List<UIComponentAnimator> sortedComponents = components.OrderBy(c => c.delay).ToList();
+
+        float previousDelay = 0f;
+
+        // 3. 정렬된 순서대로 애니메이션을 재생합니다.
+        foreach (UIComponentAnimator component in sortedComponents)
+        {
+            // 현재 딜레이와 이전 딜레이의 차이만큼 기다립니다.
+            float waitTime = component.delay - previousDelay;
+            if (waitTime > 0)
+            {
+                yield return new WaitForSeconds(waitTime);
+            }
+
+            component.PlayShowAnimation();
+            previousDelay = component.delay;
+        }
     }
 }

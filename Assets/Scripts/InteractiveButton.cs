@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting.FullSerializer;
 
 // TabGroup과 호환되도록 기능이 확장되었습니다.
 public class InteractiveButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -157,13 +158,13 @@ public class InteractiveButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
         float timer = 0f;
         Color c = spreadEffectColor;
         spreadImage.color = c;
-
+    
         while (timer < animationDuration)
         {
             float progress = timer / animationDuration;
             float scaleX = Mathf.Lerp(0, 1, 1 - Mathf.Pow(1 - progress, 3));
             spreadImage.rectTransform.localScale = new Vector3(scaleX, 1, 1);
-
+    
             if (fadeOut)
             {
                 float alpha = Mathf.Lerp(1, 0, progress);
@@ -172,7 +173,7 @@ public class InteractiveButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
             timer += Time.deltaTime;
             yield return null;
         }
-
+    
         if (fadeOut)
         {
             spreadImage.rectTransform.localScale = new Vector3(0, 1, 1);
@@ -183,4 +184,6 @@ public class InteractiveButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
             spreadImage.color = c;
         }
     }
+    
+
 }

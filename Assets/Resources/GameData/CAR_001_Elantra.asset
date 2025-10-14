@@ -19,8 +19,8 @@ MonoBehaviour:
   modelPrefab: {fileID: 919132149155446097, guid: bcd97bcc728ec0348a2bdaee62d4c327, type: 3}
   rarity: 0
   baseSpeed: 100
-  baseDrift: 170
-  baseAcceleration: 250
+  baseDrift: 100
+  baseAcceleration: 100
   growthSpeed: 50
   growthDrift: 20
   growthAcceleration: 30

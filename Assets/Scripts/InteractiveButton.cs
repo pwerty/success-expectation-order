@@ -43,7 +43,7 @@ public class InteractiveButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
             mainButtonImage = GetComponent<Image>();
         }
         buttonComponent = GetComponent<Button>();
-
+        buttonComponent.onClick.AddListener(PlayClickSound);
         if (buttonText != null)
         {
             initialTextScale = buttonText.transform.localScale;
@@ -73,6 +73,22 @@ public class InteractiveButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             if (currentSpreadAnimation != null) StopCoroutine(currentSpreadAnimation);
             currentSpreadAnimation = StartCoroutine(AnimateSpread(true));
+        }
+        
+        if (SFXManager.instance != null)
+        {
+            SFXManager.instance.PlayHoverSound();
+        }
+        
+    }
+    
+    private void PlayClickSound()
+    {
+        // 수정 전: SoundManager.instance.PlaySound(clickSound);
+        // 수정 후:
+        if (SFXManager.instance != null)
+        {
+            SFXManager.instance.PlayClickSound();
         }
     }
 

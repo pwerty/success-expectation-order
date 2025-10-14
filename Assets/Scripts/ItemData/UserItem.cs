@@ -19,7 +19,7 @@ public class UserItem
         {
             if (_data == null)
             {
-                // _data = DataManager.Instance.GetItem(itemDataId);
+                 _data = DataManager.Instance.GetItemData(itemDataId);
             }
             return _data;
         }

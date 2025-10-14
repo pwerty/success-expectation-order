@@ -73,14 +73,18 @@ public class InventoryPopup : MonoBehaviour
     /// <summary>
     /// 아이템 슬롯이 클릭되었을 때 호출될 함수입니다.
     /// </summary>
+// InventoryPopup.cs의 OnItemSelected 함수 수정
     private void OnItemSelected(UserItem selectedItem)
     {
-        Debug.Log($"{selectedItem.Data.name} (+{selectedItem.enhancementLevel}) 이(가) 선택되었습니다.");
-        
-        // 아이템을 선택했으니 팝업을 닫습니다.
-        Hide();
-        
-        // TODO: 여기서 선택된 아이템 정보를 다른 시스템(예: 장착 시스템)에 전달하는 로직을 추가할 수 있습니다.
+        // 1. 무대 감독에게 어떤 배우를 무대에 올릴지 지시합니다.
+        PreviewManager.Instance.DisplayItem(selectedItem);
+
+        // 2. 상태판에게 디스플레이를 갱신하라고 직접 알려줍니다.
+        //    (더 좋은 방법은 PreviewManager가 방송하는 이벤트를 상태판이 듣게 하는 것입니다.)
+        FindObjectOfType<GarageDetailPanel>()?.UpdateDisplay();
+
+        // 팝업을 닫는 로직은 이제 필요 없을 수 있습니다.
+        // Hide();
     }
 
     /// <summary>

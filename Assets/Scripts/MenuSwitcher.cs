@@ -81,7 +81,6 @@ public class MenuSwitcher : MonoBehaviour
             // 2. 있다면, 그 Context Menu를 켠다.
             contextMenuToShow.SetActive(true);
             currentActiveMenu = contextMenuToShow;
-            print("갱신 완료");
         }
         else
         {

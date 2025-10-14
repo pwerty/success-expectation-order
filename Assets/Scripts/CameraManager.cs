@@ -71,7 +71,6 @@ public class CameraManager : MonoBehaviour
     private void HandlePanelChange(UIPanel panel)
     {
         if (panel.isLogicalPanel) return;
-        print(panel.panelId + "의 활성화로 카메라 이동 작동 시작");
         // 만약 이전에 실행 중이던 카메라 이동이 있었다면, 즉시 중단합니다.
         if (activeMoveCoroutine != null)
         {

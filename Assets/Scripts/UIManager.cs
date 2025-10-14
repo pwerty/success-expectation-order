@@ -58,8 +58,6 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        
-        
         // 모든 패널을 숨기고 홈 패널만 표시하며 시작합니다.
         foreach (var panel in panelRegistry.Values)
         {
@@ -74,6 +72,11 @@ public class UIManager : MonoBehaviour
     /// <param name="panelId">열고 싶은 UIPanel의 ID</param>
     public void SwitchPanel(string panelId)
     {
+        if (panelId != homePanelId)
+        {
+            historyStack.Clear();
+            historyStack.Push(() => ShowPanelInternal(homePanelId));
+        }
         if (currentActivePanel != null)
         {
             // 뒤로가기를 위해 "이전 패널을 켜는 행동"을 저장하지 않고 현재 패널만 닫습니다.

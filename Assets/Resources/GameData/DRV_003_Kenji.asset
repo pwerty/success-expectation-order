@@ -16,7 +16,7 @@ MonoBehaviour:
   name: Kenji
   description: 
   icon: {fileID: 21300000, guid: 988fdfb209d21454da2ec3ee76f0388f, type: 3}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 845705823087334322, guid: b51c82d5285593847b6c5ce2240dc08b, type: 3}
   basePedalSense: 100
   baseRecoverySpeed: 90
   baseProblemSolving: 110

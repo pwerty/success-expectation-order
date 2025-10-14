@@ -22,8 +22,6 @@ public class ShopItemSlot : MonoBehaviour
         // 1. 데이터 원본에서 정보를 가져와 UI에 표시합니다.
         iconImage.sprite = data.icon;
         nameText.text = data.name;
-        // TODO: 가격 정보를 ItemData에 추가하거나, 별도의 가격표에서 찾아와야 합니다.
-        priceText.text = "100 Gold"; // 임시 가격
 
         // 2. 구매 버튼이 눌렸을 때, 어떤 행동을 할지 외부에서 주입받습니다.
         purchaseButton.onClick.RemoveAllListeners();

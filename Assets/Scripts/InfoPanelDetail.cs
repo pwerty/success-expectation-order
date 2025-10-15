@@ -4,6 +4,25 @@ using UnityEngine.UI;
 
 public class GarageDetailPanel : MonoBehaviour
 {
+    [SerializeField] private InventoryPopup inventoryPopup;
+
+    public void OpenInventoryForCar()
+    {
+        inventoryPopup.Show(ItemCategory.Car, OnCarSelectedForPreview);
+    }
+    
+    public void OnInventoryForDriver()
+    {
+        inventoryPopup.Show(ItemCategory.Car, OnCarSelectedForPreview);
+    }
+
+    // '배달 요청사항'에 해당하는 실제 함수
+    private void OnCarSelectedForPreview(UserItem selected)
+    {
+        // 기존 OnItemSelected에 있던 로직을 이곳으로 옮겨옵니다.
+        PreviewManager.Instance.DisplayItem(selected);
+        UpdateDisplay();
+    }
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI speedText;

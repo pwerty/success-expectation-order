@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public class UserItem
 {
+    public string instanceId;
     public string itemDataId; // 어떤 아이템의 원본인지 가리키는 ID
     public int enhancementLevel = 1; // 강화 단계
     public int quantity = 1;

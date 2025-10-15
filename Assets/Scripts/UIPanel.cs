@@ -20,6 +20,7 @@ public class UIPanel : MonoBehaviour
     public Vector3 cameraTargetPosition;
     public Vector3 cameraTargetRotation;
     public bool isControlledByManager = false;
+    private Animator animator;
     
     // 애니메이션 적용 여부를 정하기 위해 논리적 정의 여부를 확인
     public bool isLogicalPanel = false;
@@ -27,6 +28,7 @@ public class UIPanel : MonoBehaviour
     private void Awake()
     {
         panelId = name;
+        animator = GetComponent<Animator>();
     }
 
     /// <summary>
@@ -37,7 +39,17 @@ public class UIPanel : MonoBehaviour
         gameObject.SetActive(true);
         StartCoroutine(AnimateChildrenOnShow());
         if (!isLogicalPanel) AudioManager.Instance.SetMusicLayer(musicLayer);
+        if (animator != null)
+        {
+            print(panelId + "에서 애니메이션 초기화 실시");
+            animator.Play("Idle", 0, 0);
+        }
     }
+    
+    /// <summary>
+    /// 이 GameObject와 모든 자식에 있는 Animator 컴포넌트를 찾아서
+    /// 기본 상태(Default State)로 즉시 초기화합니다.
+    /// </summary>
 
     /// <summary>
     /// 패널이 화면에서 사라질 때 호출됩니다.

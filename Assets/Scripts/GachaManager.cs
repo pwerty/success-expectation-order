@@ -51,6 +51,7 @@ public class GachaManager : MonoBehaviour
             UIManager.Instance.OpenPanel("GachaResult");
             
             // 3. 방금 열린 결과창에 뽑기 결과 데이터를 전달합니다.
+            // 여긴 최적화 할 수 있을듯.
             GachaResultPanel.Instance.ShowResults(pulledItems);
 
             for (int i = 0; i < pulledItems.Count; i++)

@@ -42,6 +42,7 @@ public class InventoryManager : MonoBehaviour
             // 템플릿 정보를 바탕으로 실제 UserItem 인스턴스를 생성합니다.
             UserItem newItem = new UserItem
             {
+                instanceId = System.Guid.NewGuid().ToString(),
                 itemDataId = initialItem.itemDataId,
                 quantity = initialItem.quantity,
                 enhancementLevel = initialItem.enhancementLevel
@@ -78,16 +79,19 @@ public class InventoryManager : MonoBehaviour
     /// <summary>
     /// 새로운 아이템을 인벤토리에 추가합니다. (예: 뽑기 성공 시)
     /// </summary>
-    public void AddItem(string itemId, int quantity = 1, int level = 1)
+    public string AddItem(string itemId, int quantity = 1, int level = 1)
     {
+        string instId = System.Guid.NewGuid().ToString();
         // (실제로는 중첩 가능한 아이템인지 등 복잡한 로직이 필요)
         UserItem newItem = new UserItem
         {
+            instanceId = instId,
             itemDataId = itemId,
             quantity = quantity,
             enhancementLevel = level
         };
         userInventory.Add(newItem);
+        return instId;
     }
     
     /// <summary>
@@ -98,6 +102,7 @@ public class InventoryManager : MonoBehaviour
         // (실제로는 중첩 가능한 아이템인지 등 복잡한 로직이 필요)
         UserItem newItem = new UserItem
         {
+            instanceId = System.Guid.NewGuid().ToString(),
             itemDataId = itemId,
             quantity = 1,
             enhancementLevel = 1
@@ -110,5 +115,52 @@ public class InventoryManager : MonoBehaviour
     public List<UserItem> GetCurrentInventoryData()
     {
         return userInventory;
+    }
+    
+    /// <summary>
+    /// 인벤토리에서 특정 아이템 인스턴스를 제거합니다.
+    /// 객체 참조가 동일한 첫 번째 아이템을 찾아 제거합니다.
+    /// </summary>
+    /// <param name="itemToRemove">제거할 UserItem 객체 인스턴스</param>
+    /// <returns>제거 성공 여부</returns>
+    public bool RemoveItem(UserItem itemToRemove)
+    {
+        if (itemToRemove == null)
+        {
+            Debug.LogError("제거하려는 아이템이 null입니다.");
+            return false;
+        }
+
+        // List.Remove()는 전달된 객체와 '참조'가 동일한 첫 번째 요소를 리스트에서 제거합니다.
+        bool success = userInventory.Remove(itemToRemove);
+
+        if (success)
+        {
+            // DataManager를 통해 아이템의 원본 이름을 가져옵니다.
+            string itemName = DataManager.Instance.GetItemData(itemToRemove.itemDataId).name;
+            Debug.Log($"{itemName} 아이템이 인벤토리에서 제거되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("제거하려는 아이템을 인벤토리에서 찾을 수 없습니다. 이미 제거되었거나 다른 인스턴스일 수 있습니다.");
+        }
+
+        return success;
+    }
+    
+    /// <summary>
+    /// 고유 ID(Instance ID)를 이용해 인벤토리에서 아이템을 제거합니다.
+    /// </summary>
+    public bool RemoveItemByInstanceId(string instanceId)
+    {
+        UserItem itemToRemove = userInventory.FirstOrDefault(item => item.instanceId == instanceId);
+
+        if (itemToRemove != null)
+        {
+            return RemoveItem(itemToRemove); // 이미 만든 참조 기반 제거 함수를 재활용
+        }
+        
+        Debug.LogWarning($"Instance ID '{instanceId}'에 해당하는 아이템을 찾을 수 없습니다.");
+        return false;
     }
 }

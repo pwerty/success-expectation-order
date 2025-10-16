@@ -8,8 +8,11 @@ public class PreviewManager : MonoBehaviour
     public static PreviewManager Instance { get; private set; }
 
     [Tooltip("3D 모델이 소환될 위치입니다.")]
-    [SerializeField] private Transform spawnPoint;
-
+    [SerializeField] private Transform carSpawnPoint;
+    [SerializeField] private Transform driverSpawnPoint;
+    private Transform spawnPoint;
+    [Tooltip("소환될 모델의 크기를 조절합니다.")]
+    [SerializeField] private Vector3 previewModelScale = Vector3.one * 2;
     // 현재 선택되어 표시되고 있는 아이템의 정보입니다.
     public UserItem CurrentSelectedItem { get; private set; }
     
@@ -49,6 +52,7 @@ public class PreviewManager : MonoBehaviour
         // 특정 패널(예: "Garage")이 열렸을 때만 반응하도록 합니다.
         if (panel.panelId == "DriverPanel")
         {
+            print("차 출력 시작!");
             // 인벤토리에서 첫 번째 차를 찾아 표시합니다.
             var playerCars = InventoryManager.Instance.GetPlayerCars();
             if (playerCars != null && playerCars.Count > 0)
@@ -58,8 +62,6 @@ public class PreviewManager : MonoBehaviour
         }
         else
         {
-            // 다른 패널이 열리면, 기존에 있던 미리보기 모델을 숨깁니다.
-            DisplayItem(null);
         }
     }
 
@@ -69,6 +71,15 @@ public class PreviewManager : MonoBehaviour
     /// <param name="itemToDisplay">표시할 아이템 (null이면 숨김)</param>
     public void DisplayItem(UserItem itemToDisplay)
     {
+        if (itemToDisplay.itemDataId.StartsWith("DRV"))
+        {
+            spawnPoint = driverSpawnPoint;
+            print("사람 생성 실시");
+        }
+        else
+        {
+            spawnPoint = carSpawnPoint;
+        }
         // 1. 이전에 있던 모델이 있다면 파괴합니다.
         if (currentPreviewObject != null)
         {
@@ -85,10 +96,10 @@ public class PreviewManager : MonoBehaviour
             if (data.modelPrefab != null)
             {
                 currentPreviewObject = Instantiate(data.modelPrefab, spawnPoint.position, spawnPoint.rotation);
+                currentPreviewObject.transform.localScale = previewModelScale;
+                print("모델 생성 완료!!");
             }
         }
         
-        // TODO: "미리보기가 업데이트되었다!"는 새로운 전역 이벤트를 방송하여 UI가 반응하게 합니다.
-        // PreviewEvents.PreviewUpdated(CurrentSelectedItem);
     }
 }

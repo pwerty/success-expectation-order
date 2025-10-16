@@ -151,7 +151,6 @@ public class TabGroup : MonoBehaviour
         // 이전에 선택된 탭이 있었다면, Deselect를 호출하여 원래 상태로 되돌립니다.
         if (currentSelectedTab != null)
         {
-            print("Deselect 대상은!" + currentSelectedTab.button.name);
             currentSelectedTab.button.Deselect();
         }
 

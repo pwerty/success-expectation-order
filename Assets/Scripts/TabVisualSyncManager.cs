@@ -21,7 +21,6 @@ public class TabVisualSyncManager : MonoBehaviour
         {
             // TabGroup에게 "이 Panel ID를 가진 버튼이 너한테 있니?" 라고 물어봅니다.
             int tabIndex = FindTabIndexInGroup(group, panel.panelId);
-            print("검색 실시 :" + panel.panelId);
 
             if (tabIndex != -1)
             {

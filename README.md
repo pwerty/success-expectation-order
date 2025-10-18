@@ -8,7 +8,7 @@ Unity UGUI의 고질적인 강한 결합도(Tight Coupling)와 복잡한 의존�
 이 프로젝트는 단순히 UI를 화면에 그리는 것을 넘어, SOLID 원칙과 이벤트 기반 아키텍처를 통해 UI 시스템이 어떻게 게임의 다른 시스템(카메라, 오디오, 게임 로직)과 완벽하게 분리되어 독립적으로 작동할 수 있는지에 대한 해답을 제안합니다.
 
 ## 시연 영상
-[![Watch the video](https://img.youtube.com/vi/A5J5ypOLc9E/maxresdefault.jpg)](https://youtu.be/A5J5ypOLc9E)
+[![Watch the video](https://img.youtube.com/vi/oO4ZeWpcWMA/maxresdefault.jpg)](https://www.youtube.com/watch?v=oO4ZeWpcWMA)
 
 
 ##  프로젝트 목표
